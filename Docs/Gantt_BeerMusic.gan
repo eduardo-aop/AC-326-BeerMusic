@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2017-08-06" view-index="0" gantt-divider-location="322" resource-divider-location="300" version="2.8.5" locale="pt_BR">
+    <description/>
+    <view zooming-state="default:5" id="gantt-chart">
+        <field id="tpd3" name="Nome" width="170" order="0"/>
+        <field id="tpd4" name="Data inicial" width="74" order="1"/>
+        <field id="tpd5" name="Data final" width="74" order="2"/>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Nome" width="210" order="0"/>
+        <field id="1" name="Função" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="0" name="BeerMusic" color="#8cb6ce" meeting="false" start="2017-08-08" duration="57" complete="0" expand="true">
+            <task id="18" name="Documento" color="#000000" meeting="false" start="2017-08-08" duration="20" complete="0" expand="true">
+                <task id="21" name="Solução de software" color="#8cb6ce" meeting="false" start="2017-08-08" duration="5" complete="0" expand="true">
+                    <depend id="19" type="2" difference="0" hardness="Strong"/>
+                    <depend id="24" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="24" name="Funcionamento" color="#8cb6ce" meeting="false" start="2017-08-15" duration="5" complete="0" expand="true"/>
+                <task id="19" name="Diagrama de Blocos" color="#8cb6ce" meeting="false" start="2017-08-15" duration="5" complete="0" expand="true">
+                    <depend id="20" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="20" name="UI" color="#8cb6ce" meeting="false" start="2017-08-22" duration="3" complete="0" expand="true">
+                    <depend id="22" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="22" name="Acessórios" color="#8cb6ce" meeting="false" start="2017-08-25" duration="2" complete="0" expand="true"/>
+                <task id="23" name="Itens Adicionais" color="#8cb6ce" meeting="false" start="2017-08-29" duration="5" complete="0" expand="true"/>
+            </task>
+            <task id="58" name="Software" color="#000000" meeting="false" start="2017-09-05" duration="37" complete="0" expand="true">
+                <task id="63" name="Local Server" meeting="false" start="2017-09-05" duration="29" complete="0" expand="true">
+                    <task id="64" name="Comunicação Spotify" color="#8cb6ce" meeting="false" start="2017-09-05" duration="4" complete="0" expand="true">
+                        <depend id="65" type="2" difference="0" hardness="Strong"/>
+                    </task>
+                    <task id="65" name="Listagem de Músicas" color="#8cb6ce" meeting="false" start="2017-09-11" duration="5" complete="0" expand="true"/>
+                    <task id="67" name="Tocar Música" color="#8cb6ce" meeting="false" start="2017-09-18" duration="2" complete="0" expand="true">
+                        <depend id="62" type="2" difference="0" hardness="Strong"/>
+                    </task>
+                    <task id="68" name="Sincronizar Usuários" color="#8cb6ce" meeting="false" start="2017-10-05" duration="3" complete="0" expand="true"/>
+                    <task id="66" name="Computar Votos" color="#8cb6ce" meeting="false" start="2017-10-10" duration="2" complete="0" expand="true"/>
+                    <task id="69" name="Bloqueio de Usuário" color="#8cb6ce" meeting="false" start="2017-10-12" duration="2" complete="0" expand="true"/>
+                </task>
+                <task id="59" name="WebSite" meeting="false" start="2017-09-20" duration="11" complete="0" expand="true">
+                    <task id="62" name="Nome de usuário" color="#8cb6ce" meeting="false" start="2017-09-20" duration="3" complete="0" expand="true"/>
+                    <task id="75" name="Listagem de Músicas" color="#8cb6ce" meeting="false" start="2017-09-25" duration="4" complete="0" expand="true"/>
+                    <task id="60" name="Votação" color="#8cb6ce" meeting="false" start="2017-09-29" duration="4" complete="0" expand="true">
+                        <depend id="68" type="2" difference="0" hardness="Strong"/>
+                    </task>
+                </task>
+                <task id="70" name="Web Server" meeting="false" start="2017-10-16" duration="8" complete="0" expand="true">
+                    <task id="72" name="Localização de Estabelecimentos" color="#8cb6ce" meeting="false" start="2017-10-16" duration="4" complete="0" expand="true"/>
+                    <task id="71" name="Sincronismo" color="#8cb6ce" meeting="false" start="2017-10-20" duration="1" complete="0" expand="true"/>
+                    <task id="73" name="Músicas mais tocadas" color="#8cb6ce" meeting="false" start="2017-10-23" duration="3" complete="0" expand="true"/>
+                </task>
+            </task>
+        </task>
+    </tasks>
+    <resources>
+        <resource id="0" name="Eduardo Pereira" function="Default:0" contacts="" phone=""/>
+        <resource id="1" name="Filipe Mazzon" function="Default:0" contacts="" phone=""/>
+        <resource id="2" name="Pedro Polez" function="Default:0" contacts="" phone=""/>
+        <resource id="3" name="Jonathan Donizetti" function="Default:0" contacts="" phone=""/>
+    </resources>
+    <allocations>
+        <allocation task-id="18" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="19" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="20" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="22" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="65" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="68" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="69" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="72" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="71" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="18" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="21" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="24" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="22" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="64" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="67" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="66" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="62" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="60" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="73" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="18" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="21" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="19" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="23" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="58" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="68" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="66" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="62" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="60" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="71" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="18" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="24" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="23" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="58" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="65" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="69" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="75" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="72" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="73" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+    </allocations>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+</project>
