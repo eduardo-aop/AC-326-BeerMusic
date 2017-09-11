@@ -7,7 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" Closing="Window_Closing">
     <Grid Background="#FF2F2F34">
-        <Label x:Name="labelStatus" Content="Info..." HorizontalAlignment="Left" Margin="237,155,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <Label x:Name="labelStatus" Content="Info..." HorizontalAlignment="Left" Margin="10,283,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <Label x:Name="musicName" Content="Label" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Global User Interface" FontSize="22">
+            <Label.Effect>
+                <DropShadowEffect/>
+            </Label.Effect>
+        </Label>
+        <Button x:Name="pausePlay" Content="Pause // Play" HorizontalAlignment="Left" Margin="122,113,0,0" VerticalAlignment="Top" Width="111" Background="#FF5D5D6A" Foreground="#FF80FF00" Height="91" FontSize="18" Click="pausePlay_Click"/>
 
     </Grid>
 </Window>

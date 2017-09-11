@@ -13,6 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using SpotifyAPI.Local;
+using SpotifyAPI.Local.Enums;
+using SpotifyAPI.Local.Models;
+
 namespace beermusic
 {
     /// <summary>
@@ -21,6 +25,8 @@ namespace beermusic
     public partial class MainWindow : Window
     {
         SimpleHTTPServer barServer;
+        SpotifyLocalAPI spotifyController;
+        StatusResponse spotifyStatus;
         public MainWindow()
         {
             InitializeComponent();
@@ -34,12 +40,42 @@ namespace beermusic
 
             //Para acessar, entre em "localhost:8084" ou seuip:8084 na rede local.
             //Desative o firewall do windows! ACREDITE!
+
+
+            spotifyController = new SpotifyLocalAPI();
+            //Verifica se o spotify está aberto.
+            if (!SpotifyLocalAPI.IsSpotifyRunning())
+                return;
+            if (!SpotifyLocalAPI.IsSpotifyWebHelperRunning())
+                return;
+
+            if (!spotifyController.Connect())
+                return;
+
+            spotifyStatus = spotifyController.GetStatus();
+
+            musicName.Content = spotifyStatus.Track.TrackResource.Name;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             //Para o servidor HTTP quando o programa fechar.
             barServer.Stop();
+        }
+
+        private void pausePlay_Click(object sender, RoutedEventArgs e)
+        {
+            if (spotifyController != null)
+            {
+                spotifyStatus = spotifyController.GetStatus();
+                if (spotifyStatus.Playing)
+                {
+                    spotifyController.Pause();
+                } else
+                {
+                    spotifyController.Play();
+                }
+            }
         }
     }
 }
