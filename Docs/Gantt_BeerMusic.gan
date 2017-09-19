@@ -1,13 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2017-08-06" view-index="0" gantt-divider-location="322" resource-divider-location="300" version="2.8.5" locale="pt_BR">
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2017-08-06" view-index="0" gantt-divider-location="831" resource-divider-location="300" version="2.8.5" locale="pt_BR">
     <description/>
     <view zooming-state="default:5" id="gantt-chart">
-        <field id="tpd3" name="Nome" width="170" order="0"/>
-        <field id="tpd4" name="Data inicial" width="74" order="1"/>
-        <field id="tpd5" name="Data final" width="74" order="2"/>
+        <field id="tpd3" name="Nome" width="314" order="0"/>
+        <field id="tpd4" name="Data inicial" width="94" order="1"/>
+        <field id="tpd5" name="Data final" width="75" order="2"/>
+        <field id="tpd13" name="Pessoas" width="344" order="3"/>
     </view>
     <view id="resource-table">
-        <field id="0" name="Nome" width="210" order="0"/>
-        <field id="1" name="Função" width="86" order="1"/>
+        <field id="0" name="Nome" width="154" order="0"/>
+        <field id="1" name="Função" width="66" order="1"/>
+        <field id="tpc1" name="" width="76" order="2"/>
     </view>
     <!-- -->
     <calendars>
@@ -78,6 +80,7 @@
         </task>
     </tasks>
     <resources>
+        <custom-property-definition id="tpc1" name="" type="text"/>
         <resource id="0" name="Eduardo Pereira" function="Default:0" contacts="" phone=""/>
         <resource id="1" name="Filipe Mazzon" function="Default:0" contacts="" phone=""/>
         <resource id="2" name="Pedro Polez" function="Default:0" contacts="" phone=""/>
@@ -104,7 +107,6 @@
         <allocation task-id="60" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="73" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="18" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
-        <allocation task-id="21" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="19" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="23" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="58" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
@@ -113,6 +115,7 @@
         <allocation task-id="62" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="60" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="71" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="21" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="18" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="24" resource-id="3" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="23" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
