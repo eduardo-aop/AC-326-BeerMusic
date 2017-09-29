@@ -55,6 +55,20 @@ namespace beermusic
             spotifyStatus = spotifyController.GetStatus();
 
             musicName.Content = spotifyStatus.Track.TrackResource.Name;
+            artistNameLabel.Content = spotifyStatus.Track.ArtistResource.Name;
+            try
+            {
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.UriSource = new Uri(spotifyStatus.Track.GetAlbumArtUrl(AlbumArtSize.Size640));
+                bitmapImage.EndInit();
+                albumArt.Source = bitmapImage;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
