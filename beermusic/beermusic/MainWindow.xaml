@@ -5,17 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:beermusic"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="670" Closing="Window_Closing">
+        Title="MainWindow" Height="720" Width="1280" Closing="Window_Closing">
     <Grid Background="#FF2F2F34">
-        <Label x:Name="labelStatus" Content="Info..." HorizontalAlignment="Left" Margin="0,393,0,0" VerticalAlignment="Top" Foreground="White"/>
-        <Label x:Name="musicName" Content="Label" HorizontalAlignment="Left" Margin="247,10,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Global User Interface" FontSize="36">
+        <Label x:Name="labelStatus" Content="Info..." HorizontalAlignment="Left" Margin="10,653,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <Label x:Name="musicName" Content="Label" HorizontalAlignment="Left" Margin="316,43,0,0" VerticalAlignment="Top" Foreground="#FFF0F0F0" FontFamily="Global User Interface" FontSize="36">
             <Label.Effect>
                 <DropShadowEffect/>
             </Label.Effect>
         </Label>
-        <Button x:Name="pausePlay" Content="Pause // Play" HorizontalAlignment="Left" Margin="541,382,0,0" VerticalAlignment="Top" Width="111" Background="#FF5D5D6A" Foreground="#FF80FF00" Height="27" FontSize="18" Click="pausePlay_Click"/>
-        <Image x:Name="albumArt" HorizontalAlignment="Left" Height="232" Margin="10,10,0,0" VerticalAlignment="Top" Width="232"/>
-        <Label x:Name="artistNameLabel" Content="Label" HorizontalAlignment="Left" Margin="247,68,0,0" VerticalAlignment="Top" Foreground="#FFD4D4D4" FontSize="20"/>
+        <Button x:Name="pausePlay" Content="Pause // Play" HorizontalAlignment="Left" Margin="1151,652,0,0" VerticalAlignment="Top" Width="111" Background="#FF5D5D6A" Foreground="#FF80FF00" Height="27" FontSize="18" Click="pausePlay_Click"/>
+        <Image x:Name="albumArt" HorizontalAlignment="Left" Height="294" Margin="7,44,0,0" VerticalAlignment="Top" Width="294">
+            <Image.Effect>
+                <DropShadowEffect/>
+            </Image.Effect>
+        </Image>
+        <Label x:Name="artistNameLabel" Content="Label" HorizontalAlignment="Left" Margin="316,81,0,0" VerticalAlignment="Top" Foreground="#FF9E9E9E" FontSize="22" RenderTransformOrigin="0.965,0.486"/>
+        <Label x:Name="nowLab" Content="Tocando agora:" HorizontalAlignment="Left" Margin="71,0,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22">
+            <Label.Effect>
+                <DropShadowEffect/>
+            </Label.Effect>
+        </Label>
+        <ProgressBar x:Name="songProgress" HorizontalAlignment="Left" Height="19" Margin="10,629,0,0" VerticalAlignment="Top" Width="1252" Foreground="#FFF50808"/>
 
     </Grid>
 </Window>
