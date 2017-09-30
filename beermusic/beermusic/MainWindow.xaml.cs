@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using SpotifyAPI.Local;
 using SpotifyAPI.Local.Enums;
 using SpotifyAPI.Local.Models;
+using System.IO;
+using System.Diagnostics;
 
 namespace beermusic
 {
@@ -32,15 +34,13 @@ namespace beermusic
             InitializeComponent();
 
             //A string abaixo define a pasta que conterá os ".html" que serão servidos
-            string httpServeAddress = @"C:\TestServer";
-
+            string httpServeAddress = System.IO.Directory.GetParent(System.IO.Directory.GetParent(Environment.CurrentDirectory).ToString()).ToString() + @"\webresources";
             //Inicializa o server no seu IP na porta 8084
             barServer = new SimpleHTTPServer(httpServeAddress, 8084);
             labelStatus.Content = "Server is running on this port: " + barServer.Port.ToString();
 
             //Para acessar, entre em "localhost:8084" ou seuip:8084 na rede local.
             //Desative o firewall do windows! ACREDITE!
-
 
             spotifyController = new SpotifyLocalAPI();
             //Verifica se o spotify está aberto.
