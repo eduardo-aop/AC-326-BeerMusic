@@ -10,7 +10,7 @@ using System.Net;
 using System.IO;
 using System.Threading;
 using System.Diagnostics;
-
+using System.Threading.Tasks;
 
 class SimpleHTTPServer
 {
@@ -154,11 +154,21 @@ class SimpleHTTPServer
             }
         }
     }
- 
+
+    public static string RequestBody(HttpListenerContext context)
+    {
+        var bodyStream = new StreamReader(context.Request.InputStream);
+        var bodyText = bodyStream.ReadToEnd();
+        return bodyText;
+
+    }
+
+
     private void Process(HttpListenerContext context)
     {
         string filename = context.Request.Url.AbsolutePath;
         Console.WriteLine(filename);
+      
         string typeRequest = context.Request.HttpMethod;
 
         if (!filename.Equals("/") && typeRequest.Equals("POST"))
@@ -180,7 +190,7 @@ class SimpleHTTPServer
         byte[] buffer;
 
         filename = filename.Substring(1);
- 
+
         if (string.IsNullOrEmpty(filename))
         {
             foreach (string indexFile in _indexFiles)
