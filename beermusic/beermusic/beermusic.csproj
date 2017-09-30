@@ -64,6 +64,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Music.cs" />
+    <Compile Include="ParseJson.cs" />
+    <Compile Include="Vote.cs" />
+    <Compile Include="Login.cs" />
     <Compile Include="ByteImageConverter.cs" />
     <Compile Include="SimpleHTTPServer.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -108,6 +112,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="webresources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

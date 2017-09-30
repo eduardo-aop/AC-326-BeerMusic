@@ -93,6 +93,7 @@ class SimpleHTTPServer
     private string _rootDirectory;
     private HttpListener _listener;
     private int _port;
+    private List<String> _ipList;
  
     public int Port
     {
@@ -108,6 +109,7 @@ class SimpleHTTPServer
     public SimpleHTTPServer(string path, int port)
     {
         this.Initialize(path, port);
+        _ipList = new List<String>();
     }
  
     /// <summary>
@@ -138,6 +140,7 @@ class SimpleHTTPServer
         _listener = new HttpListener();
         _listener.Prefixes.Add("http://*:" + _port.ToString() + "/");
         _listener.Start();
+        
         while (true)
         {
             try
@@ -147,7 +150,7 @@ class SimpleHTTPServer
             }
             catch (Exception ex)
             {
- 
+                Console.WriteLine(ex.ToString());
             }
         }
     }
@@ -165,12 +168,29 @@ class SimpleHTTPServer
     {
         string filename = context.Request.Url.AbsolutePath;
         Console.WriteLine(filename);
-        string type = context.Request.HttpMethod;
-        string body;
-        if (string.Compare(type, "POST") == 0)
+      
+        string typeRequest = context.Request.HttpMethod;
+
+        if (!filename.Equals("/") && typeRequest.Equals("POST"))
         {
-            body = RequestBody(context);
+            var request = context.Request;
+            string json;
+            using (var reader = new StreamReader(request.InputStream,
+                                                 request.ContentEncoding))
+            {
+                json = reader.ReadToEnd();
+            }
+
+            if (filename.Contains("/vote"))
+            {
+                this.VoteMethod(json);
+            }
         }
+
+        byte[] buffer;
+
+        filename = filename.Substring(1);
+
         if (string.IsNullOrEmpty(filename))
         {
             foreach (string indexFile in _indexFiles)
@@ -198,10 +218,10 @@ class SimpleHTTPServer
                 context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
                 context.Response.AddHeader("Last-Modified", System.IO.File.GetLastWriteTime(filename).ToString("r"));
  
-                byte[] buffer = new byte[1024 * 16];
+                byte[] buffered = new byte[1024 * 16];
                 int nbytes;
-                while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
-                    context.Response.OutputStream.Write(buffer, 0, nbytes);
+                while ((nbytes = input.Read(buffered, 0, buffered.Length)) > 0)
+                    context.Response.OutputStream.Write(buffered, 0, nbytes);
                 input.Close();
                 
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
@@ -209,6 +229,7 @@ class SimpleHTTPServer
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
  
@@ -229,5 +250,17 @@ class SimpleHTTPServer
         _serverThread.Start();
     }
  
- 
+    private void VoteMethod(string json)
+    {
+        Login l = ParseJson.parseLoginJson(json);
+        if (_ipList.Contains(l.ipAddress))
+        {
+            Console.WriteLine("Ip: " + l.ipAddress + "already registered");
+        }
+        else
+        {
+            Console.WriteLine("Ip: " + l.ipAddress + "add");
+            _ipList.Add(l.ipAddress);
+        }
+    }
 }
