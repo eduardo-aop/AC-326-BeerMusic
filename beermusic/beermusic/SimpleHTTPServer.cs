@@ -10,7 +10,7 @@ using System.Net;
 using System.IO;
 using System.Threading;
 using System.Diagnostics;
-
+using System.Threading.Tasks;
 
 class SimpleHTTPServer
 {
@@ -154,33 +154,43 @@ class SimpleHTTPServer
             }
         }
     }
- 
+
+    public string RequestBody(HttpListenerContext context)
+    {
+        var request = context.Request;
+        string json;
+
+        //Get body from request
+        using (var reader = new StreamReader(request.InputStream, request.ContentEncoding))
+        {
+            json = reader.ReadToEnd();
+        }
+
+        return json;
+    }
+
     private void Process(HttpListenerContext context)
     {
         string filename = context.Request.Url.AbsolutePath;
         Console.WriteLine(filename);
-        string typeRequest = context.Request.HttpMethod;
+      
+        //Get request type
+        string requestType = context.Request.HttpMethod;
 
-        if (!filename.Equals("/") && typeRequest.Equals("POST"))
+        //Check if path contains something more than '/' and is type POST
+        if (!filename.Equals("/") && requestType.Equals("POST"))
         {
-            var request = context.Request;
-            string json;
-            using (var reader = new StreamReader(request.InputStream,
-                                                 request.ContentEncoding))
-            {
-                json = reader.ReadToEnd();
-            }
+            string json = RequestBody(context);
 
+            //check if path contains '/vote', it means user is voting in a music
             if (filename.Contains("/vote"))
             {
                 this.VoteMethod(json);
             }
         }
-
-        byte[] buffer;
-
+        
         filename = filename.Substring(1);
- 
+
         if (string.IsNullOrEmpty(filename))
         {
             foreach (string indexFile in _indexFiles)
@@ -208,10 +218,10 @@ class SimpleHTTPServer
                 context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
                 context.Response.AddHeader("Last-Modified", System.IO.File.GetLastWriteTime(filename).ToString("r"));
  
-                byte[] buffered = new byte[1024 * 16];
+                byte[] buffer = new byte[1024 * 16];
                 int nbytes;
-                while ((nbytes = input.Read(buffered, 0, buffered.Length)) > 0)
-                    context.Response.OutputStream.Write(buffered, 0, nbytes);
+                while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
+                    context.Response.OutputStream.Write(buffer, 0, nbytes);
                 input.Close();
                 
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
@@ -240,6 +250,7 @@ class SimpleHTTPServer
         _serverThread.Start();
     }
  
+
     private void VoteMethod(string json)
     {
         Login l = ParseJson.parseLoginJson(json);
