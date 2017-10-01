@@ -16,8 +16,12 @@ using System.Windows.Shapes;
 using SpotifyAPI.Local;
 using SpotifyAPI.Local.Enums;
 using SpotifyAPI.Local.Models;
-using System.IO;
+
+using System.Threading;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Net.Cache;
 
 namespace beermusic
 {
@@ -48,13 +52,43 @@ namespace beermusic
                 return;
             if (!SpotifyLocalAPI.IsSpotifyWebHelperRunning())
                 return;
-
             if (!spotifyController.Connect())
                 return;
 
+
+            //Inicializa os demais componentes e recebe informações iniciais do spotify
             spotifyStatus = spotifyController.GetStatus();
 
+            songProgress.Maximum = spotifyStatus.Track.Length;
             musicName.Content = spotifyStatus.Track.TrackResource.Name;
+            artistNameLabel.Content = spotifyStatus.Track.ArtistResource.Name;
+            //albumArt.Source = ByteImageConverter.ByteToImage(spotifyStatus.Track.GetAlbumArtAsByteArray(AlbumArtSize.Size640));
+            updateCover(spotifyStatus.Track.GetAlbumArtUrl(AlbumArtSize.Size640));
+            spotifyController.ListenForEvents = true;
+            spotifyController.OnTrackTimeChange += SpotifyController_OnTrackTimeChange;
+            spotifyController.OnTrackChange += SpotifyController_OnTrackChange;
+        }
+
+        private void SpotifyController_OnTrackChange(object sender, TrackChangeEventArgs e)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                
+                musicName.Content = e.NewTrack.TrackResource.Name;
+                artistNameLabel.Content = e.NewTrack.ArtistResource.Name;
+                songProgress.Maximum = e.NewTrack.Length;
+                //albumArt.Source = ByteImageConverter.ByteToImage(spotifyStatus.Track.GetAlbumArtAsByteArray(AlbumArtSize.Size640));
+                updateCover(e.NewTrack.GetAlbumArtUrl(AlbumArtSize.Size640));
+                
+            }));
+        }
+
+        private void SpotifyController_OnTrackTimeChange(object sender, TrackTimeChangeEventArgs e)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                songProgress.Value = e.TrackTime;
+            }));
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -77,5 +111,26 @@ namespace beermusic
                 }
             }
         }
+
+        private void updateCover(string information)
+        {
+            try
+            {
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                bitmapImage.UriCachePolicy = new RequestCachePolicy(RequestCacheLevel.BypassCache);
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.UriSource = new Uri(information);
+                bitmapImage.EndInit();
+
+                albumArt.Source = bitmapImage;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }

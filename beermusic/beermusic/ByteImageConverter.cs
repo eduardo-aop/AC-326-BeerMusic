@@ -15,8 +15,8 @@ namespace beermusic
         {
             BitmapImage biImg = new BitmapImage();
             MemoryStream ms = new MemoryStream(imageData);
+            biImg.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
             biImg.BeginInit();
-            biImg.CacheOption = BitmapCacheOption.None;
             biImg.StreamSource = ms;
             biImg.EndInit();
 

@@ -154,19 +154,19 @@ class SimpleHTTPServer
             }
         }
     }
-
+    
     public string RequestBody(HttpListenerContext context)
     {
         var request = context.Request;
-        string json;
+        string body;
 
         //Get body from request
         using (var reader = new StreamReader(request.InputStream, request.ContentEncoding))
         {
-            json = reader.ReadToEnd();
+            body = reader.ReadToEnd();
         }
 
-        return json;
+        return body;
     }
 
     private void Process(HttpListenerContext context)
@@ -188,7 +188,7 @@ class SimpleHTTPServer
                 this.VoteMethod(json);
             }
         }
-        
+
         filename = filename.Substring(1);
 
         if (string.IsNullOrEmpty(filename))
