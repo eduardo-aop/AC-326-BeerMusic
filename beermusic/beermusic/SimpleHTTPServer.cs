@@ -157,10 +157,9 @@ class SimpleHTTPServer
 
     public static string RequestBody(HttpListenerContext context)
     {
-        var bodyStream = new StreamReader(context.Request.InputStream);
+        var bodyStream = new StreamReader(context.Request.InputStream, context.Request.ContentEncoding);
         var bodyText = bodyStream.ReadToEnd();
         return bodyText;
-
     }
 
 
@@ -187,7 +186,6 @@ class SimpleHTTPServer
             }
         }
 
-        byte[] buffer;
 
         filename = filename.Substring(1);
 

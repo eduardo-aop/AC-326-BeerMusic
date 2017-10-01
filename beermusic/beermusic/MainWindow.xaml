@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:beermusic"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280" Closing="Window_Closing">
+        Title="MainWindow" Height="720" Width="1280" Closing="Window_Closing" WindowStartupLocation="CenterScreen">
     <Grid Background="#FF2F2F34">
         <Label x:Name="labelStatus" Content="Info..." HorizontalAlignment="Left" Margin="10,653,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Label x:Name="musicName" Content="Label" HorizontalAlignment="Left" Margin="316,43,0,0" VerticalAlignment="Top" Foreground="#FFF0F0F0" FontFamily="Global User Interface" FontSize="36">
