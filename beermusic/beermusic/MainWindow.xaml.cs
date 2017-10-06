@@ -56,8 +56,8 @@ namespace beermusic
                     if (SpotifyLocalAPI.IsSpotifyRunning())
                     {
                         iniciou = true;
-                        //Após abrir, espera 6 segundos para a inicialização (gambiarras ftw)
-                        System.Threading.Thread.Sleep(6000);
+                        //Após abrir, espera 10 segundos para a inicialização (gambiarras ftw)
+                        System.Threading.Thread.Sleep(10000);
                         sw.Stop();
                         break;
                     }                        

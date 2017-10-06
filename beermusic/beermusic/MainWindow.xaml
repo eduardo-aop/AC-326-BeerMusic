@@ -13,8 +13,8 @@
                 <DropShadowEffect/>
             </Label.Effect>
         </Label>
-        <Button x:Name="pausePlay" Content="Pause // Play" HorizontalAlignment="Left" Margin="1151,652,0,10" Width="111" Background="#FF5D5D6A" Foreground="#FF80FF00" FontSize="18" Click="pausePlay_Click"/>
-        <Image x:Name="albumArt" HorizontalAlignment="Left" Height="294" Margin="7,44,0,0" VerticalAlignment="Top" Width="294">
+        <Button x:Name="pausePlay" Content="Pause // Play" HorizontalAlignment="Left" Margin="1151,652,0,0" VerticalAlignment="Top" Width="111" Background="#FF5D5D6A" Foreground="#FF80FF00" Height="27" FontSize="18" Click="pausePlay_Click"/>
+        <Image x:Name="albumArt" HorizontalAlignment="Left" Height="173" Margin="23,60,0,0" VerticalAlignment="Top" Width="173">
             <Image.Effect>
                 <DropShadowEffect/>
             </Image.Effect>
