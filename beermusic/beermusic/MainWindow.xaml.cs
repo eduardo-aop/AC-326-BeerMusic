@@ -33,12 +33,50 @@ namespace beermusic
         SimpleHTTPServer barServer;
         SpotifyLocalAPI spotifyController;
         StatusResponse spotifyStatus;
+
         public MainWindow()
         {
             InitializeComponent();
+            //Contador de tempo para iniciar o spotify
+            Stopwatch sw = new Stopwatch();
+            bool iniciou = false;
+
+            //Pega o caminho da pasta roaming do usuário
+            string pasta = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+            spotifyController = new SpotifyLocalAPI();
+            //Verifica se o spotify está aberto.
+            if (!SpotifyLocalAPI.IsSpotifyRunning())
+            {
+                //se não estiver aberto, inicia o contador de tempo e tenta iniciar o sptf
+                sw.Start();               
+                System.Diagnostics.Process.Start(pasta + @"\Spotify\Spotify.exe");
+                //Espera 15 segundos até o pc conseguir abrir o programa
+                while(sw.Elapsed.Seconds <= 15){
+                    if (SpotifyLocalAPI.IsSpotifyRunning())
+                    {
+                        iniciou = true;
+                        //Após abrir, espera 10 segundos para a inicialização (gambiarras ftw)
+                        System.Threading.Thread.Sleep(10000);
+                        sw.Stop();
+                        break;
+                    }                        
+                }
+                if (!iniciou)
+                {
+                    MessageBox.Show(@"Não foi possível iniciar o programa, tente novamente");
+                    return;
+                }
+            }
+
+            if (!SpotifyLocalAPI.IsSpotifyWebHelperRunning())
+                return;
+            //if (!spotifyController.Connect())
+            //    return;
 
             //A string abaixo define a pasta que conterá os ".html" que serão servidos
             string httpServeAddress = System.IO.Directory.GetParent(System.IO.Directory.GetParent(Environment.CurrentDirectory).ToString()).ToString() + @"\webresources";
+
             //Inicializa o server no seu IP na porta 8084
             barServer = new SimpleHTTPServer(httpServeAddress, 8084);
             labelStatus.Content = "Server is running on this port: " + barServer.Port.ToString();
@@ -46,27 +84,27 @@ namespace beermusic
             //Para acessar, entre em "localhost:8084" ou seuip:8084 na rede local.
             //Desative o firewall do windows! ACREDITE!
 
-            spotifyController = new SpotifyLocalAPI();
-            //Verifica se o spotify está aberto.
-            if (!SpotifyLocalAPI.IsSpotifyRunning())
-                return;
-            if (!SpotifyLocalAPI.IsSpotifyWebHelperRunning())
-                return;
-            if (!spotifyController.Connect())
-                return;
+            bool successful = spotifyController.Connect();
+            if (successful)
+            {
+                //************************    Antes estava fora da condição "if"    **************************************************
+                //Inicializa os demais componentes e recebe informações iniciais do spotify
+                spotifyStatus = spotifyController.GetStatus();
 
-
-            //Inicializa os demais componentes e recebe informações iniciais do spotify
-            spotifyStatus = spotifyController.GetStatus();
-
-            songProgress.Maximum = spotifyStatus.Track.Length;
-            musicName.Content = spotifyStatus.Track.TrackResource.Name;
-            artistNameLabel.Content = spotifyStatus.Track.ArtistResource.Name;
-            //albumArt.Source = ByteImageConverter.ByteToImage(spotifyStatus.Track.GetAlbumArtAsByteArray(AlbumArtSize.Size640));
-            updateCover(spotifyStatus.Track.GetAlbumArtUrl(AlbumArtSize.Size640));
-            spotifyController.ListenForEvents = true;
-            spotifyController.OnTrackTimeChange += SpotifyController_OnTrackTimeChange;
-            spotifyController.OnTrackChange += SpotifyController_OnTrackChange;
+                songProgress.Maximum = spotifyStatus.Track.Length;
+                musicName.Content = spotifyStatus.Track.TrackResource.Name;
+                artistNameLabel.Content = spotifyStatus.Track.ArtistResource.Name;
+                //albumArt.Source = ByteImageConverter.ByteToImage(spotifyStatus.Track.GetAlbumArtAsByteArray(AlbumArtSize.Size640));
+                updateCover(spotifyStatus.Track.GetAlbumArtUrl(AlbumArtSize.Size640));
+                spotifyController.ListenForEvents = true;
+                spotifyController.OnTrackTimeChange += SpotifyController_OnTrackTimeChange;
+                spotifyController.OnTrackChange += SpotifyController_OnTrackChange;
+            }
+            else
+            {
+                MessageBox.Show(@"Não foi possível conectar ao Spotify");
+                return;
+            }
         }
 
         private void SpotifyController_OnTrackChange(object sender, TrackChangeEventArgs e)
