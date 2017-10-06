@@ -1,0 +1,13 @@
+url: "IP_FIXO:8084"
+
+/vote -> POST
+	Enviar: id_musica
+	
+/musics -> GET
+	Recebe: lista_musicas
+	
+/bloqueio -> POST
+	Enviar: ip
+	
+/currentmusic -> GET
+	Recebe: musica_tocando
