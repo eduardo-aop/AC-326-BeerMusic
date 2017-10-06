@@ -78,7 +78,7 @@ namespace beermusic
                 artistNameLabel.Content = e.NewTrack.ArtistResource.Name;
                 songProgress.Maximum = e.NewTrack.Length;
                 //albumArt.Source = ByteImageConverter.ByteToImage(spotifyStatus.Track.GetAlbumArtAsByteArray(AlbumArtSize.Size640));
-                updateCover(e.NewTrack.GetAlbumArtUrl(AlbumArtSize.Size640));
+                updateCover(e.NewTrack.GetAlbumArtUrl(AlbumArtSize.Size320));
                 
             }));
         }
