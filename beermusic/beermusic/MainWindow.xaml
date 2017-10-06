@@ -6,26 +6,33 @@
         xmlns:local="clr-namespace:beermusic"
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280" Closing="Window_Closing" WindowStartupLocation="CenterScreen">
-    <Grid Background="#FF2F2F34">
+    <Grid Background="#FF2F2F34" ShowGridLines="True">
         <Label x:Name="labelStatus" Content="Info..." HorizontalAlignment="Left" Margin="10,653,0,0" VerticalAlignment="Top" Foreground="White"/>
-        <Label x:Name="musicName" Content="Label" HorizontalAlignment="Left" Margin="316,43,0,0" VerticalAlignment="Top" Foreground="#FFF0F0F0" FontFamily="Global User Interface" FontSize="36">
+        <Label x:Name="musicName" Content="The Incredible Adventures of Unfair Larry Jr. -- The Second Winter Parade" Margin="211,92,1,0" VerticalAlignment="Top" Foreground="#FFF0F0F0" FontFamily="Global User Interface" FontSize="42" Width="1060">
             <Label.Effect>
                 <DropShadowEffect/>
             </Label.Effect>
         </Label>
         <Button x:Name="pausePlay" Content="Pause // Play" HorizontalAlignment="Left" Margin="1151,652,0,0" VerticalAlignment="Top" Width="111" Background="#FF5D5D6A" Foreground="#FF80FF00" Height="27" FontSize="18" Click="pausePlay_Click"/>
-        <Image x:Name="albumArt" HorizontalAlignment="Left" Height="294" Margin="7,44,0,0" VerticalAlignment="Top" Width="294">
+        <Image x:Name="albumArt" HorizontalAlignment="Left" Height="173" Margin="23,60,0,0" VerticalAlignment="Top" Width="173">
             <Image.Effect>
                 <DropShadowEffect/>
             </Image.Effect>
         </Image>
-        <Label x:Name="artistNameLabel" Content="Label" HorizontalAlignment="Left" Margin="316,81,0,0" VerticalAlignment="Top" Foreground="#FF9E9E9E" FontSize="22" RenderTransformOrigin="0.965,0.486"/>
-        <Label x:Name="nowLab" Content="Tocando agora:" HorizontalAlignment="Left" Margin="71,0,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22">
+        <Label x:Name="artistNameLabel" Content="The Super Duper Ultraspacial Marine Music Company ~~ Live @ The Outlet" HorizontalAlignment="Center" Margin="215,148,95,0" VerticalAlignment="Top" Foreground="#FFC1C1C1" FontSize="28" RenderTransformOrigin="0.965,0.486" Width="962" Background="Transparent" BorderThickness="0"/>
+        <Label x:Name="nowLab" Content="Tocando agora:" HorizontalAlignment="Left" Margin="557,0,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22">
             <Label.Effect>
                 <DropShadowEffect/>
             </Label.Effect>
         </Label>
-        <ProgressBar x:Name="songProgress" HorizontalAlignment="Left" Height="19" Margin="10,629,0,0" VerticalAlignment="Top" Width="1252" Foreground="#FFF50808"/>
+        <ProgressBar x:Name="songProgress" HorizontalAlignment="Left" Height="19" Margin="10,629,0,0" VerticalAlignment="Top" Width="1252" Foreground="#FF19BF4E" BorderBrush="#FF787878" Background="#FF424249"/>
+        <Rectangle Fill="#FF818181" Height="2" Margin="25,247,27,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
+        <Label x:Name="votaçãoLabel" Content="Votação atual:" HorizontalAlignment="Left" Margin="563,254,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22" Height="40" SnapsToDevicePixels="True">
+            <Label.Effect>
+                <DropShadowEffect/>
+            </Label.Effect>
+        </Label>
+        <Rectangle Fill="#FF818181" Height="2" Margin="25,44,27,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
 
     </Grid>
 </Window>
