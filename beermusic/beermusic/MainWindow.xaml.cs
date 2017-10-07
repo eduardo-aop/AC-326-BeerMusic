@@ -34,6 +34,9 @@ namespace beermusic
         SpotifyLocalAPI spotifyController;
         StatusResponse spotifyStatus;
 
+        List<Music> currentlyVotingSongs = new List<Music>();
+        static Random rnd = new Random();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -137,17 +140,7 @@ namespace beermusic
 
         private void pausePlay_Click(object sender, RoutedEventArgs e)
         {
-            if (spotifyController != null)
-            {
-                spotifyStatus = spotifyController.GetStatus();
-                if (spotifyStatus.Playing)
-                {
-                    spotifyController.Pause();
-                } else
-                {
-                    spotifyController.Play();
-                }
-            }
+            chooseSongsForVoting();
         }
 
         private void updateCover(string information)
@@ -168,6 +161,42 @@ namespace beermusic
             {
                 throw;
             }
+        }
+
+        private void chooseSongsForVoting()
+        {
+            //Verifica se já possui a lista de músicas prontas
+            if (!Music.hasDBPopulated)
+            {
+                //Inicializa o "banco de dados" de músicas
+                Music.parseMusicList();
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                int r = rnd.Next(Music.musicDB.Count);
+                if (i != 0)
+                {
+                    for (int j = 0; j < currentlyVotingSongs.Count; j++)
+                    {
+                        //Verifica se não há músicas repetidas
+                        while(String.Compare(currentlyVotingSongs[j].name, Music.musicDB[r].name) == 0)
+                        {
+                            r = rnd.Next(Music.musicDB.Count);
+                        }
+                        //Adiciona a música na lista de músicas a serem votadas
+                        if (currentlyVotingSongs.Count < 4)
+                        {
+                            currentlyVotingSongs.Add(Music.musicDB.ElementAt(r));
+                        }
+                    }
+                }else
+                {
+                    //A primeira música não precisa ser verificada!
+                    currentlyVotingSongs.Add(Music.musicDB.ElementAt(r));
+                }
+            }
+            Debug.WriteLine("Finished selecting songs for voting!");
         }
 
     }
