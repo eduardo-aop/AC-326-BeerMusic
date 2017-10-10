@@ -272,7 +272,7 @@ class SimpleHTTPServer
 
     private void VoteMethod(string json)
     {
-        Login l = ParseJson.parseLoginJson(json);
+        /*Music l = ParseJson.parseLoginJson(json);
         if (_ipList.Contains(l.ipAddress))
         {
             Console.WriteLine("Ip: " + l.ipAddress + "already registered");
@@ -281,6 +281,6 @@ class SimpleHTTPServer
         {
             Console.WriteLine("Ip: " + l.ipAddress + "add");
             _ipList.Add(l.ipAddress);
-        }
+        }*/
     }
 }

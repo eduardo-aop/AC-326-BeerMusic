@@ -8,7 +8,7 @@ using System.Net;
 class Vote
 {
     private static Vote instance;
-
+    Dictionary<string, int> musicsMap = new Dictionary<string, int>();
     private Vote() { }
 
     public static Vote Instance
@@ -23,8 +23,11 @@ class Vote
         }
     }
 
-    public void computeVote(HttpListenerContext context)
+    public void computeVote(string url)
     {
+        int count = musicsMap[url];
+        musicsMap.Add(url, count+1);
 
+        var sortedDict = from entry in musicsMap orderby entry.Value ascending select entry;
     }
 }

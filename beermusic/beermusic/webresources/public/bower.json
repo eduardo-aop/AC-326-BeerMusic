@@ -1,0 +1,24 @@
+{
+  "name": "public",
+  "homepage": "https://github.com/eduardo-aop/AC-326-BeerMusic",
+  "authors": [
+    "Eduardo Augusto de Oliveira Pereira <eduardoaugusto93@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "test",
+    "tests",
+    "bower_components"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-ui-router": "^0.3.2",
+    "bootstrap": "^3.3.7"
+  }
+}

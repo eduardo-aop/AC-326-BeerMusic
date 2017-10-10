@@ -11,4 +11,10 @@ class ParseJson
         Login login = Newtonsoft.Json.JsonConvert.DeserializeObject<Login>(json);
         return login;
     }
+
+    /*public static Music parseLoginJson(String json)
+    {
+        Login login = Newtonsoft.Json.JsonConvert.DeserializeObject<Login>(json);
+        return login;
+    }*/
 }

@@ -78,6 +78,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Music.cs" />
+    <Compile Include="MusicVoted.cs" />
     <Compile Include="ParseJson.cs" />
     <Compile Include="Vote.cs" />
     <Compile Include="Login.cs" />
