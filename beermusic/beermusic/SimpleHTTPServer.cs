@@ -186,6 +186,11 @@ class SimpleHTTPServer
             if (filename.Contains("/vote"))
             {
                 this.VoteMethod(json);
+                
+            }
+            else if (filename.Contains("/musics"))
+            {
+                this.ResponseBody(context, "");
             }
         }
 
@@ -250,6 +255,20 @@ class SimpleHTTPServer
         _serverThread.Start();
     }
  
+    private void ResponseBody(HttpListenerContext context, string body)
+    {
+        HttpListenerRequest request = context.Request;
+        // Obtain a response object.
+        HttpListenerResponse response = context.Response;
+        // Construct a response.
+
+        byte[] buffer = System.Text.Encoding.UTF8.GetBytes(body);
+        // Get a response stream and write the response to it.
+        response.ContentLength64 = buffer.Length;
+        System.IO.Stream output = response.OutputStream;
+        output.Write(buffer, 0, buffer.Length);
+        output.Close();
+    }
 
     private void VoteMethod(string json)
     {
