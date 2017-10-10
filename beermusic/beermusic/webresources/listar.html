@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- estilo -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+
+
+     	<!--Let browser know website is optimized for mobile-->
+     	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<!--javascript-->
+		<script src="./js/jquery-3.2.1.js"></script>
+      	<script type="text/javascript" src="js/materialize.min.js"></script>
+		<script src="./js/listar.js"></script>
+
+	</head>
+	<body>
+		<div class="vote-page">
+			<div class="container">
+				<div class="center-align">			
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Nome da musica</th> 
+									<th>Autor da musica</th>
+									<th>Num de votos</th>
+								</tr> 
+							</thead>
+							<tbody>
+								<tr>
+									<td><form><input type="radio" name="nome" value="1" id="maz" checked></form></td>
+									<td id="musica1"></td>
+									<td id="autor1"></td>
+									<td id="votos1"></td>
+								</tr>
+								<tr>
+									<td><input type="radio" name="nome" value="2" id="maz1"></td>
+									<td id="musica2"></td>
+									<td id="autor2"></td>
+									<td id="votos2"></td>
+								</tr>
+								<tr>
+									<td><input type="radio" name="nome" value="3"></td>
+									<td id="musica3"></td>
+									<td id="autor3"></td>
+									<td id="votos3"></td>
+								</tr>
+								<tr>
+									<td><input type="radio" name="nome" value="4"></td>
+									<td id="musica4"></td>
+									<td id="autor4"></td>
+									<td id="votos4"></td>
+								</tr>
+							</tbody>
+					    </table>
+					</div>
+					
+					<button id="buttonSave" class="btn-floating btn-large">
+	   					<i class="material-icons">check</i>
+	 				</button>
+				</div>
+			</div>
+		</div>	
+	</body>
+</html>
