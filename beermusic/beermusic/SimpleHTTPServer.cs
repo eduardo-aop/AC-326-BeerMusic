@@ -108,6 +108,7 @@ class SimpleHTTPServer
     /// <param name="port">Port of the server.</param>
     public SimpleHTTPServer(string path, int port)
     {
+        Music.parseMusicList();
         this.Initialize(path, port);
         _ipList = new List<String>();
     }
@@ -169,6 +170,17 @@ class SimpleHTTPServer
         return body;
     }
 
+    private void sendResponseBody(HttpListenerContext context, string jsonResposne)
+    {
+        HttpListenerResponse response = context.Response;
+        byte[] buffer = System.Text.Encoding.UTF8.GetBytes(jsonResposne);
+        // Get a response stream and write the response to it.
+        response.ContentLength64 = buffer.Length;
+        System.IO.Stream output = response.OutputStream;
+        output.Write(buffer, 0, buffer.Length);
+        output.Close();
+    }
+
     private void Process(HttpListenerContext context)
     {
         string filename = context.Request.Url.AbsolutePath;
@@ -176,16 +188,27 @@ class SimpleHTTPServer
       
         //Get request type
         string requestType = context.Request.HttpMethod;
-
+        
         //Check if path contains something more than '/' and is type POST
-        if (!filename.Equals("/") && requestType.Equals("POST"))
+        if (!filename.Equals("/"))
         {
-            string json = RequestBody(context);
-
-            //check if path contains '/vote', it means user is voting in a music
-            if (filename.Contains("/vote"))
+            if (requestType.Equals("POST"))
             {
-                this.VoteMethod(json);
+                string json = RequestBody(context);
+
+                //check if path contains '/vote', it means user is voting in a music
+                if (filename.Contains("/vote"))
+                {
+                    this.VoteMethod(json);
+                }
+            }
+            else if (requestType.Equals("GET"))
+            {
+                if (filename.Contains("/musics"))
+                {
+                    string json = Music.getJsonFromList();
+                    sendResponseBody(context, json);
+                }
             }
         }
 
