@@ -65,10 +65,11 @@ class Music
 
         for (int i = 0; i < 4; i++)
         {
+            int j = 1;
             do
             {
-                int j = 1;
                 lastRandom = (lastRandom * (i + j) * 19) % musicDB.Count;
+                j++;
             }
             while (checkForRepeatedMusics(musicDB[lastRandom], someMusics));
                     
