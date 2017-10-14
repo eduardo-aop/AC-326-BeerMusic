@@ -62,15 +62,16 @@ class Music
         List<Music> someMusics = new List<Music>();
         Random r = new Random();
         int lastRandom = r.Next(0, musicDB.Count); //for ints
+
         for (int i = 0; i < 4; i++)
         {
-            lastRandom = (lastRandom * (i + 1) * 19) % musicDB.Count;
-            int j = 1;
-            while(checkForRepeatedMusics(musicDB[lastRandom], someMusics))
+            do
             {
+                int j = 1;
                 lastRandom = (lastRandom * (i + j) * 19) % musicDB.Count;
-                j++;
             }
+            while (checkForRepeatedMusics(musicDB[lastRandom], someMusics));
+                    
             someMusics.Add(musicDB[lastRandom]);
         }
         
