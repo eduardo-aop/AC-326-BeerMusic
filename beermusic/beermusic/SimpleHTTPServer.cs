@@ -9,8 +9,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.IO;
 using System.Threading;
-using System.Diagnostics;
-using System.Threading.Tasks;
+using System.Timers;
 
 class SimpleHTTPServer
 {
@@ -94,7 +93,7 @@ class SimpleHTTPServer
     private HttpListener _listener;
     private int _port;
     private List<String> _ipList;
- 
+
     public int Port
     {
         get { return _port; }
@@ -109,6 +108,7 @@ class SimpleHTTPServer
     public SimpleHTTPServer(string path, int port)
     {
         Music.parseMusicList();
+        StartThread();
         this.Initialize(path, port);
         _ipList = new List<String>();
     }
@@ -199,14 +199,13 @@ class SimpleHTTPServer
                 //check if path contains '/vote', it means user is voting in a music
                 if (filename.Contains("/vote"))
                 {
-                    this.VoteMethod(json);
                 }
             }
             else if (requestType.Equals("GET"))
             {
                 if (filename.Contains("/musics"))
                 {
-                    string json = Music.getJsonFromList();
+                    string json = Music.GetJsonMusicFromList();
                     sendResponseBody(context, json);
                 }
             }
@@ -255,7 +254,6 @@ class SimpleHTTPServer
                 Console.WriteLine(ex.ToString());
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
- 
         }
         else
         {
@@ -285,6 +283,21 @@ class SimpleHTTPServer
         {
             Console.WriteLine("Ip: " + l.ipAddress + "add");
             _ipList.Add(l.ipAddress);
+        }
+    }
+
+    private void StartThread()
+    {
+        Thread t3 = new Thread(() => RefreshMusicList());
+        t3.Start();
+    }
+
+    private void RefreshMusicList()
+    {
+        while(true)
+        {
+            Music.UpdateMusicList();
+            Thread.Sleep(1000 * 60 * 2);
         }
     }
 }

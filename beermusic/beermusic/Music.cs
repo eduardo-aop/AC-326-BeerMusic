@@ -13,6 +13,8 @@ class Music
     public string url { get; set; }
 
     public static List<Music> musicDB = new List<Music>();
+    public static List<Music> someSelectedMusics = new List<Music>();
+    public static Dictionary<string, int> musicsVoted = new Dictionary<string, int>();
     public static Dictionary<string, Music> musicsMap = new Dictionary<string, Music>();
     public static bool hasDBPopulated { get; set; } = false;
 
@@ -57,9 +59,9 @@ class Music
         Debug.WriteLine("Music database parsing complete.");
     }
 
-    public static string getJsonFromList()
+    public static void UpdateMusicList()
     {
-        List<Music> someMusics = new List<Music>();
+        someSelectedMusics.Clear();
         Random r = new Random();
         int lastRandom = r.Next(0, musicDB.Count); //for ints
 
@@ -71,13 +73,10 @@ class Music
                 lastRandom = (lastRandom * (i + j) * 19) % musicDB.Count;
                 j++;
             }
-            while (checkForRepeatedMusics(musicDB[lastRandom], someMusics));
+            while (checkForRepeatedMusics(musicDB[lastRandom], someSelectedMusics));
                     
-            someMusics.Add(musicDB[lastRandom]);
+            someSelectedMusics.Add(musicDB[lastRandom]);
         }
-        
-        var json = JsonConvert.SerializeObject(someMusics);
-        return json;
     }
 
     //return true case has some equal music and false case no one equal
@@ -92,5 +91,39 @@ class Music
             }
         }
         return false;
+    }
+
+    public static string GetJsonMusicFromList()
+    {
+        var json = JsonConvert.SerializeObject(someSelectedMusics);
+        return json;
+    }
+
+    public static void setMusicVoted(string url)
+    {
+        if (musicsVoted.ContainsKey(url))
+        {
+            musicsVoted.Add(url, musicsVoted[url]++);
+        }else
+        {
+            musicsVoted.Add(url, 1);
+        }
+    }
+
+    public static string getMusicVoted()
+    {
+        int max = 0;
+        string finalUrl = "";
+
+        foreach (string url in musicsVoted.Keys.ToArray())
+        {
+            int n = musicsVoted[url];
+            if (max <= n)
+            {
+                max = n;
+                finalUrl = url;
+            }
+        }
+        return finalUrl;
     }
 }
