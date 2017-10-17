@@ -5,15 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:beermusic"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280" Closing="Window_Closing" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="720" Width="1280" Closing="Window_Closing" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Background="#FF2F2F34" ShowGridLines="True">
-        <Label x:Name="labelStatus" Content="Info..." HorizontalAlignment="Left" Margin="10,653,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Label x:Name="musicName" Content="The Incredible Adventures of Unfair Larry Jr. -- The Second Winter Parade" Margin="211,92,1,0" VerticalAlignment="Top" Foreground="#FFF0F0F0" FontFamily="Global User Interface" FontSize="42" Width="1060">
             <Label.Effect>
                 <DropShadowEffect/>
             </Label.Effect>
         </Label>
-        <Button x:Name="pausePlay" Content="Pause // Play" HorizontalAlignment="Left" Margin="1151,652,0,0" VerticalAlignment="Top" Width="111" Background="#FF5D5D6A" Foreground="#FF80FF00" Height="27" FontSize="18" Click="pausePlay_Click"/>
         <Image x:Name="albumArt" HorizontalAlignment="Left" Height="173" Margin="23,60,0,0" VerticalAlignment="Top" Width="173">
             <Image.Effect>
                 <DropShadowEffect/>
@@ -25,7 +23,7 @@
                 <DropShadowEffect/>
             </Label.Effect>
         </Label>
-        <ProgressBar x:Name="songProgress" HorizontalAlignment="Left" Height="19" Margin="10,629,0,0" VerticalAlignment="Top" Width="1252" Foreground="#FF19BF4E" BorderBrush="#FF787878" Background="#FF424249"/>
+        <ProgressBar x:Name="songProgress" HorizontalAlignment="Left" Height="20" Margin="0,661,0,0" VerticalAlignment="Top" Width="1274" Foreground="#FF19BF4E" BorderBrush="#FF787878" Background="#FF424249"/>
         <Rectangle Fill="#FF818181" Height="2" Margin="25,247,27,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
         <Label x:Name="votaçãoLabel" Content="Votação atual:" HorizontalAlignment="Left" Margin="563,254,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22" Height="40" SnapsToDevicePixels="True">
             <Label.Effect>
@@ -33,6 +31,73 @@
             </Label.Effect>
         </Label>
         <Rectangle Fill="#FF818181" Height="2" Margin="25,44,27,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
+        <Label x:Name="numberLab" Content="#1" HorizontalAlignment="Left" Margin="15,285,0,0" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Microsoft YaHei UI" FontWeight="Bold" FontStyle="Italic" Height="90" Width="85">
+            <Label.Effect>
+                <DropShadowEffect BlurRadius="7" ShadowDepth="10"/>
+            </Label.Effect>
+        </Label>
+        <Label x:Name="numberLab2" Content="#2" HorizontalAlignment="Left" Margin="15,383,0,0" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Microsoft YaHei UI" FontWeight="Bold" FontStyle="Italic" Height="89" Width="85">
+            <Label.Effect>
+                <DropShadowEffect BlurRadius="7" ShadowDepth="10"/>
+            </Label.Effect>
+        </Label>
+        <Label x:Name="numberLab3" Content="#3" HorizontalAlignment="Left" Margin="15,479,0,0" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Microsoft YaHei UI" FontWeight="Bold" FontStyle="Italic" Height="91" Width="85">
+            <Label.Effect>
+                <DropShadowEffect BlurRadius="7" ShadowDepth="10"/>
+            </Label.Effect>
+        </Label>
+        <Label x:Name="numberLab4" Content="#4" HorizontalAlignment="Left" Margin="15,580,0,0" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Microsoft YaHei UI" FontWeight="Bold" FontStyle="Italic" Height="86" Width="85">
+            <Label.Effect>
+                <DropShadowEffect BlurRadius="7" ShadowDepth="10"/>
+            </Label.Effect>
+        </Label>
+        <Label x:Name="music1" Content="The Incredible Adventures of Unfair Larry Jr. -- The Second Winter Parade" Margin="98,294,606.453,0" VerticalAlignment="Top" Foreground="#FFF0F0F0" FontFamily="Global User Interface" FontSize="28" Height="41">
+            <Label.Effect>
+                <DropShadowEffect/>
+            </Label.Effect>
+        </Label>
+        <Label x:Name="artist1" Content="The Super Duper Ultraspacial Marine Music Company ~~ Live @ The Outlet" HorizontalAlignment="Center" Margin="101,321,606.453,0" VerticalAlignment="Top" Foreground="#FFC1C1C1" FontSize="16" RenderTransformOrigin="0.965,0.486" Width="566" Background="Transparent" BorderThickness="0"/>
+        <Label x:Name="music2" Content="The Incredible Adventures of Unfair Larry Jr. -- The Second Winter Parade" Margin="98,394,606.453,0" VerticalAlignment="Top" Foreground="#FFF0F0F0" FontFamily="Global User Interface" FontSize="28" Height="41">
+            <Label.Effect>
+                <DropShadowEffect/>
+            </Label.Effect>
+        </Label>
+        <Label x:Name="artist2" Content="The Super Duper Ultraspacial Marine Music Company ~~ Live @ The Outlet" HorizontalAlignment="Center" Margin="101,421,606.453,0" VerticalAlignment="Top" Foreground="#FFC1C1C1" FontSize="16" RenderTransformOrigin="0.965,0.486" Width="566" Background="Transparent" BorderThickness="0"/>
+        <Label x:Name="music3" Content="The Incredible Adventures of Unfair Larry Jr. -- The Second Winter Parade" Margin="98,490,606.453,0" VerticalAlignment="Top" Foreground="#FFF0F0F0" FontFamily="Global User Interface" FontSize="28" Height="41">
+            <Label.Effect>
+                <DropShadowEffect/>
+            </Label.Effect>
+        </Label>
+        <Label x:Name="artist3" Content="The Super Duper Ultraspacial Marine Music Company ~~ Live @ The Outlet" HorizontalAlignment="Center" Margin="101,517,606.453,0" VerticalAlignment="Top" Foreground="#FFC1C1C1" FontSize="16" RenderTransformOrigin="0.965,0.486" Width="566" Background="Transparent" BorderThickness="0"/>
+        <Label x:Name="music4" Content="The Incredible Adventures of Unfair Larry Jr. -- The Second Winter Parade" Margin="98,588,607.453,0" VerticalAlignment="Top" Foreground="#FFF0F0F0" FontFamily="Global User Interface" FontSize="28" Height="41">
+            <Label.Effect>
+                <DropShadowEffect/>
+            </Label.Effect>
+        </Label>
+        <Label x:Name="artist4" Content="The Super Duper Ultraspacial Marine Music Company ~~ Live @ The Outlet" HorizontalAlignment="Center" Margin="100,615,606.453,0" VerticalAlignment="Top" Foreground="#FFC1C1C1" FontSize="16" RenderTransformOrigin="0.965,0.486" Width="566" Background="Transparent" BorderThickness="0"/>
+        <Rectangle Fill="#FF818181" Height="2" Margin="152,370,51.453,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
+        <Rectangle Fill="#FF818181" Height="2" Margin="152,466,51.453,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
+        <Rectangle Fill="#FF818181" Height="2" Margin="152,563,51.264,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
+        <Label x:Name="vote1" Content="0" HorizontalAlignment="Left" Margin="1176,286,0,0" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Microsoft YaHei UI" FontWeight="Bold" FontStyle="Italic" Height="90" Width="80">
+            <Label.Effect>
+                <DropShadowEffect BlurRadius="7" ShadowDepth="10"/>
+            </Label.Effect>
+        </Label>
+        <Label x:Name="vote2" Content="0" HorizontalAlignment="Left" Margin="1176,381,0,0" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Microsoft YaHei UI" FontWeight="Bold" FontStyle="Italic" Height="90" Width="80">
+            <Label.Effect>
+                <DropShadowEffect BlurRadius="7" ShadowDepth="10"/>
+            </Label.Effect>
+        </Label>
+        <Label x:Name="vote3" Content="0" Margin="1176,478,0,0" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Microsoft YaHei UI" FontWeight="Bold" FontStyle="Italic" Height="90" HorizontalAlignment="Left" Width="80">
+            <Label.Effect>
+                <DropShadowEffect BlurRadius="7" ShadowDepth="10"/>
+            </Label.Effect>
+        </Label>
+        <Label x:Name="vote4" Content="0" HorizontalAlignment="Left" Margin="1176,575,0,0" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Microsoft YaHei UI" FontWeight="Bold" FontStyle="Italic" Height="90" Width="80">
+            <Label.Effect>
+                <DropShadowEffect BlurRadius="7" ShadowDepth="10"/>
+            </Label.Effect>
+        </Label>
 
     </Grid>
 </Window>

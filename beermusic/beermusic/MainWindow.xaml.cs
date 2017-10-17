@@ -34,12 +34,14 @@ namespace beermusic
         SpotifyLocalAPI spotifyController;
         StatusResponse spotifyStatus;
 
-        List<Music> currentlyVotingSongs = new List<Music>();
-        static Random rnd = new Random();
+        public static MainWindow client;
+
+        static List<Music> currentlyVotingSongs = new List<Music>();
 
         public MainWindow()
         {
             InitializeComponent();
+            client = this;
             //Contador de tempo para iniciar o spotify
             Stopwatch sw = new Stopwatch();
             bool iniciou = false;
@@ -82,12 +84,21 @@ namespace beermusic
 
             //Inicializa o server no seu IP na porta 8084
             barServer = new SimpleHTTPServer(httpServeAddress, 8084);
-            labelStatus.Content = "Server is running on this port: " + barServer.Port.ToString();
 
             //Para acessar, entre em "localhost:8084" ou seuip:8084 na rede local.
             //Desative o firewall do windows! ACREDITE!
 
-            bool successful = spotifyController.Connect();
+            bool successful;
+            try
+            {
+                successful = spotifyController.Connect();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(@"Não foi possível abrir o Spotify! Verifique se o mesmo está instalado, e tente novamente.");
+                throw;
+            }
+
             if (successful)
             {
                 //************************    Antes estava fora da condição "if"    **************************************************
@@ -102,6 +113,8 @@ namespace beermusic
                 spotifyController.ListenForEvents = true;
                 spotifyController.OnTrackTimeChange += SpotifyController_OnTrackTimeChange;
                 spotifyController.OnTrackChange += SpotifyController_OnTrackChange;
+                currentlyVotingSongs = Music.chooseSongsForVoting();
+                resetVotingLabels();
             }
             else
             {
@@ -120,6 +133,8 @@ namespace beermusic
                 songProgress.Maximum = e.NewTrack.Length;
                 //albumArt.Source = ByteImageConverter.ByteToImage(spotifyStatus.Track.GetAlbumArtAsByteArray(AlbumArtSize.Size640));
                 updateCover(e.NewTrack.GetAlbumArtUrl(AlbumArtSize.Size320));
+                currentlyVotingSongs = Music.chooseSongsForVoting();
+                resetVotingLabels();
                 
             }));
         }
@@ -135,12 +150,15 @@ namespace beermusic
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             //Para o servidor HTTP quando o programa fechar.
-            barServer.Stop();
-        }
-
-        private void pausePlay_Click(object sender, RoutedEventArgs e)
-        {
-            chooseSongsForVoting();
+            try
+            {
+                barServer.Stop();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Erro ao fechar servidor web!");
+                throw;
+            }
         }
 
         private void updateCover(string information)
@@ -163,41 +181,28 @@ namespace beermusic
             }
         }
 
-        private void chooseSongsForVoting()
+        public void resetVotingLabels()
         {
-            //Verifica se já possui a lista de músicas prontas
-            if (!Music.hasDBPopulated)
+            Dispatcher.BeginInvoke(new Action(() =>
             {
-                //Inicializa o "banco de dados" de músicas
-                Music.parseMusicList();
-            }
+                //São as piores linhas de código que ja vi.
+                music1.Content = currentlyVotingSongs[0].name;
+                music2.Content = currentlyVotingSongs[1].name;
+                music3.Content = currentlyVotingSongs[2].name;
+                music4.Content = currentlyVotingSongs[3].name;
 
-            for (int i = 0; i < 4; i++)
-            {
-                int r = rnd.Next(Music.musicDB.Count);
-                if (i != 0)
-                {
-                    for (int j = 0; j < currentlyVotingSongs.Count; j++)
-                    {
-                        //Verifica se não há músicas repetidas
-                        while(String.Compare(currentlyVotingSongs[j].name, Music.musicDB[r].name) == 0)
-                        {
-                            r = rnd.Next(Music.musicDB.Count);
-                        }
-                        //Adiciona a música na lista de músicas a serem votadas
-                        if (currentlyVotingSongs.Count < 4)
-                        {
-                            currentlyVotingSongs.Add(Music.musicDB.ElementAt(r));
-                        }
-                    }
-                }else
-                {
-                    //A primeira música não precisa ser verificada!
-                    currentlyVotingSongs.Add(Music.musicDB.ElementAt(r));
-                }
-            }
-            Debug.WriteLine("Finished selecting songs for voting!");
+                artist1.Content = currentlyVotingSongs[0].artist;
+                artist2.Content = currentlyVotingSongs[1].artist;
+                artist3.Content = currentlyVotingSongs[2].artist;
+                artist4.Content = currentlyVotingSongs[3].artist;
+
+                vote1.Content = currentlyVotingSongs[0].votos;
+                vote2.Content = currentlyVotingSongs[1].votos;
+                vote3.Content = currentlyVotingSongs[2].votos;
+                vote4.Content = currentlyVotingSongs[3].votos;
+
+                Debug.WriteLine("Finished updating UI labels!");
+            }));
         }
-
     }
 }

@@ -107,8 +107,6 @@ class SimpleHTTPServer
     /// <param name="port">Port of the server.</param>
     public SimpleHTTPServer(string path, int port)
     {
-        Music.parseMusicList();
-        StartThread();
         this.Initialize(path, port);
         _ipList = new List<String>();
     }
@@ -185,10 +183,12 @@ class SimpleHTTPServer
     {
         string filename = context.Request.Url.AbsolutePath;
         Console.WriteLine(filename);
+        Console.WriteLine("Received a new web request.");
       
         //Get request type
         string requestType = context.Request.HttpMethod;
-        
+        Console.WriteLine("Determined request type.");
+
         //Check if path contains something more than '/' and is type POST
         if (!filename.Equals("/"))
         {
@@ -199,6 +199,7 @@ class SimpleHTTPServer
                 //check if path contains '/vote', it means user is voting in a music
                 if (filename.Contains("/vote"))
                 {
+                    Music.setMusicVoted(json);
                 }
             }
             else if (requestType.Equals("GET"))
@@ -210,7 +211,7 @@ class SimpleHTTPServer
                 }
             }
         }
-
+        Console.WriteLine("Path checked.");
         filename = filename.Substring(1);
 
         if (string.IsNullOrEmpty(filename))
@@ -232,7 +233,7 @@ class SimpleHTTPServer
             try
             {
                 Stream input = new FileStream(filename, FileMode.Open);
-                
+                Console.WriteLine("Checking if file exists.");
                 //Adding permanent http response headers
                 string mime;
                 context.Response.ContentType = _mimeTypeMappings.TryGetValue(Path.GetExtension(filename), out mime) ? mime : "application/octet-stream";
@@ -245,7 +246,8 @@ class SimpleHTTPServer
                 while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
                     context.Response.OutputStream.Write(buffer, 0, nbytes);
                 input.Close();
-                
+
+                Console.WriteLine("Served file.");
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
                 context.Response.OutputStream.Flush();
             }
@@ -259,7 +261,8 @@ class SimpleHTTPServer
         {
             context.Response.StatusCode = (int)HttpStatusCode.NotFound;
         }
-        
+
+        Console.WriteLine("Stream closed.");
         context.Response.OutputStream.Close();
     }
  
@@ -283,21 +286,6 @@ class SimpleHTTPServer
         {
             Console.WriteLine("Ip: " + l.ipAddress + "add");
             _ipList.Add(l.ipAddress);
-        }
-    }
-
-    private void StartThread()
-    {
-        Thread t3 = new Thread(() => RefreshMusicList());
-        t3.Start();
-    }
-
-    private void RefreshMusicList()
-    {
-        while(true)
-        {
-            Music.UpdateMusicList();
-            Thread.Sleep(1000 * 60 * 2);
         }
     }
 }

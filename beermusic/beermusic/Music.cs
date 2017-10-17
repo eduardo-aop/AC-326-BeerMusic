@@ -5,17 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Windows;
 
 class Music
 {
     public string name { get; set; }
     public string artist { get; set; }
     public string url { get; set; }
+    public int votos { get; set; }
+
+    static List<Music> currentlyVotingSongs = new List<Music>();
+    static Random rnd = new Random();
 
     public static List<Music> musicDB = new List<Music>();
-    public static List<Music> someSelectedMusics = new List<Music>();
     public static Dictionary<string, int> musicsVoted = new Dictionary<string, int>();
-    public static Dictionary<string, Music> musicsMap = new Dictionary<string, Music>();
     public static bool hasDBPopulated { get; set; } = false;
 
     Music(string songName, string artistName, string spotifyUrl)
@@ -41,44 +44,6 @@ class Music
         Debug.WriteLine("Music database parsing complete.");
     }
 
-    public static void parseMusicMap()
-    {
-        string line;
-        //Cria o leitor de arquivos e lê os dados.
-        System.IO.StreamReader fileReader = new System.IO.StreamReader("musicDb.txt");
-        while ((line = fileReader.ReadLine()) != null)
-        {
-            Debug.WriteLine(line);
-            var splitResult = line.Split('|');
-            Music newMusic = new Music(splitResult[0], splitResult[1], splitResult[2]);
-            string[] stringSeparators = new string[] { "track/" };
-            var splitUrl = splitResult[2].Split(stringSeparators, StringSplitOptions.None);
-            musicsMap.Add(splitUrl[1], newMusic);
-        }
-        hasDBPopulated = true;
-        Debug.WriteLine("Music database parsing complete.");
-    }
-
-    public static void UpdateMusicList()
-    {
-        someSelectedMusics.Clear();
-        Random r = new Random();
-        int lastRandom = r.Next(0, musicDB.Count); //for ints
-
-        for (int i = 0; i < 4; i++)
-        {
-            int j = 1;
-            do
-            {
-                lastRandom = (lastRandom * (i + j) * 19) % musicDB.Count;
-                j++;
-            }
-            while (checkForRepeatedMusics(musicDB[lastRandom], someSelectedMusics));
-                    
-            someSelectedMusics.Add(musicDB[lastRandom]);
-        }
-    }
-
     //return true case has some equal music and false case no one equal
     public static bool checkForRepeatedMusics(Music music, List<Music> musics)
     {
@@ -95,35 +60,57 @@ class Music
 
     public static string GetJsonMusicFromList()
     {
-        var json = JsonConvert.SerializeObject(someSelectedMusics);
+        var json = JsonConvert.SerializeObject(currentlyVotingSongs);
         return json;
     }
 
     public static void setMusicVoted(string url)
     {
-        if (musicsVoted.ContainsKey(url))
+        foreach (Music music in currentlyVotingSongs)
         {
-            musicsVoted.Add(url, musicsVoted[url]++);
-        }else
-        {
-            musicsVoted.Add(url, 1);
+            if (music.url.Equals(url))
+            {
+                music.votos++;
+                beermusic.MainWindow.client.resetVotingLabels();
+            }
         }
     }
 
-    public static string getMusicVoted()
+    public static List<Music> chooseSongsForVoting()
     {
-        int max = 0;
-        string finalUrl = "";
-
-        foreach (string url in musicsVoted.Keys.ToArray())
+        //Verifica se já possui a lista de músicas prontas
+        if (!Music.hasDBPopulated)
         {
-            int n = musicsVoted[url];
-            if (max <= n)
+            //Inicializa o "banco de dados" de músicas
+            Music.parseMusicList();
+        }
+        currentlyVotingSongs.Clear();
+        for (int i = 0; i < 4; i++)
+        {
+            int r = rnd.Next(Music.musicDB.Count);
+            if (i != 0)
             {
-                max = n;
-                finalUrl = url;
+                for (int j = 0; j < currentlyVotingSongs.Count; j++)
+                {
+                    //Verifica se não há músicas repetidas
+                    while (String.Compare(currentlyVotingSongs[j].name, Music.musicDB[r].name) == 0)
+                    {
+                        r = rnd.Next(Music.musicDB.Count);
+                    }
+                    //Adiciona a música na lista de músicas a serem votadas
+                    if (currentlyVotingSongs.Count < 4)
+                    {
+                        currentlyVotingSongs.Add(Music.musicDB.ElementAt(r));
+                    }
+                }
+            }
+            else
+            {
+                //A primeira música não precisa ser verificada!
+                currentlyVotingSongs.Add(Music.musicDB.ElementAt(r));
             }
         }
-        return finalUrl;
+        Debug.WriteLine("Finished selecting songs for voting!");
+        return currentlyVotingSongs;
     }
 }
