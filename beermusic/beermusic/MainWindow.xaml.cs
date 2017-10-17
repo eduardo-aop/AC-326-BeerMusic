@@ -34,12 +34,14 @@ namespace beermusic
         SpotifyLocalAPI spotifyController;
         StatusResponse spotifyStatus;
 
-        List<Music> currentlyVotingSongs = new List<Music>();
-        static Random rnd = new Random();
+        public static MainWindow client;
+
+        static List<Music> currentlyVotingSongs = new List<Music>();
 
         public MainWindow()
         {
             InitializeComponent();
+            client = this;
             //Contador de tempo para iniciar o spotify
             Stopwatch sw = new Stopwatch();
             bool iniciou = false;
@@ -111,7 +113,7 @@ namespace beermusic
                 spotifyController.ListenForEvents = true;
                 spotifyController.OnTrackTimeChange += SpotifyController_OnTrackTimeChange;
                 spotifyController.OnTrackChange += SpotifyController_OnTrackChange;
-                chooseSongsForVoting();
+                currentlyVotingSongs = Music.chooseSongsForVoting();
                 resetVotingLabels();
             }
             else
@@ -131,7 +133,7 @@ namespace beermusic
                 songProgress.Maximum = e.NewTrack.Length;
                 //albumArt.Source = ByteImageConverter.ByteToImage(spotifyStatus.Track.GetAlbumArtAsByteArray(AlbumArtSize.Size640));
                 updateCover(e.NewTrack.GetAlbumArtUrl(AlbumArtSize.Size320));
-                chooseSongsForVoting();
+                currentlyVotingSongs = Music.chooseSongsForVoting();
                 resetVotingLabels();
                 
             }));
@@ -179,43 +181,7 @@ namespace beermusic
             }
         }
 
-        private void chooseSongsForVoting()
-        {
-            //Verifica se já possui a lista de músicas prontas
-            if (!Music.hasDBPopulated)
-            {
-                //Inicializa o "banco de dados" de músicas
-                Music.parseMusicList();
-            }
-            currentlyVotingSongs.Clear();
-            for (int i = 0; i < 4; i++)
-            {
-                int r = rnd.Next(Music.musicDB.Count);
-                if (i != 0)
-                {
-                    for (int j = 0; j < currentlyVotingSongs.Count; j++)
-                    {
-                        //Verifica se não há músicas repetidas
-                        while(String.Compare(currentlyVotingSongs[j].name, Music.musicDB[r].name) == 0)
-                        {
-                            r = rnd.Next(Music.musicDB.Count);
-                        }
-                        //Adiciona a música na lista de músicas a serem votadas
-                        if (currentlyVotingSongs.Count < 4)
-                        {
-                            currentlyVotingSongs.Add(Music.musicDB.ElementAt(r));
-                        }
-                    }
-                }else
-                {
-                    //A primeira música não precisa ser verificada!
-                    currentlyVotingSongs.Add(Music.musicDB.ElementAt(r));
-                }
-            }
-            Debug.WriteLine("Finished selecting songs for voting!");
-        }
-
-        private void resetVotingLabels()
+        public void resetVotingLabels()
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
@@ -229,9 +195,14 @@ namespace beermusic
                 artist2.Content = currentlyVotingSongs[1].artist;
                 artist3.Content = currentlyVotingSongs[2].artist;
                 artist4.Content = currentlyVotingSongs[3].artist;
+
+                vote1.Content = currentlyVotingSongs[0].votos;
+                vote2.Content = currentlyVotingSongs[1].votos;
+                vote3.Content = currentlyVotingSongs[2].votos;
+                vote4.Content = currentlyVotingSongs[3].votos;
+
                 Debug.WriteLine("Finished updating UI labels!");
             }));
         }
-
     }
 }

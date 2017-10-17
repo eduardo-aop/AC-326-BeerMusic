@@ -23,7 +23,7 @@
                 <DropShadowEffect/>
             </Label.Effect>
         </Label>
-        <ProgressBar x:Name="songProgress" HorizontalAlignment="Left" Height="19" Margin="10,661,0,0" VerticalAlignment="Top" Width="1252" Foreground="#FF19BF4E" BorderBrush="#FF787878" Background="#FF424249"/>
+        <ProgressBar x:Name="songProgress" HorizontalAlignment="Left" Height="20" Margin="0,661,0,0" VerticalAlignment="Top" Width="1274" Foreground="#FF19BF4E" BorderBrush="#FF787878" Background="#FF424249"/>
         <Rectangle Fill="#FF818181" Height="2" Margin="25,247,27,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
         <Label x:Name="votaçãoLabel" Content="Votação atual:" HorizontalAlignment="Left" Margin="563,254,0,0" VerticalAlignment="Top" Foreground="White" FontSize="22" Height="40" SnapsToDevicePixels="True">
             <Label.Effect>
@@ -78,22 +78,22 @@
         <Rectangle Fill="#FF818181" Height="2" Margin="152,370,51.453,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
         <Rectangle Fill="#FF818181" Height="2" Margin="152,466,51.453,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
         <Rectangle Fill="#FF818181" Height="2" Margin="152,563,51.264,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
-        <Label x:Name="numberLab_Copy" Content="0" HorizontalAlignment="Left" Margin="1176,286,0,0" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Microsoft YaHei UI" FontWeight="Bold" FontStyle="Italic" Height="90" Width="80">
+        <Label x:Name="vote1" Content="0" HorizontalAlignment="Left" Margin="1176,286,0,0" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Microsoft YaHei UI" FontWeight="Bold" FontStyle="Italic" Height="90" Width="80">
             <Label.Effect>
                 <DropShadowEffect BlurRadius="7" ShadowDepth="10"/>
             </Label.Effect>
         </Label>
-        <Label x:Name="numberLab_Copy1" Content="0" HorizontalAlignment="Left" Margin="1176,381,0,0" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Microsoft YaHei UI" FontWeight="Bold" FontStyle="Italic" Height="90" Width="80">
+        <Label x:Name="vote2" Content="0" HorizontalAlignment="Left" Margin="1176,381,0,0" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Microsoft YaHei UI" FontWeight="Bold" FontStyle="Italic" Height="90" Width="80">
             <Label.Effect>
                 <DropShadowEffect BlurRadius="7" ShadowDepth="10"/>
             </Label.Effect>
         </Label>
-        <Label x:Name="numberLab_Copy2" Content="0" Margin="1176,478,0,0" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Microsoft YaHei UI" FontWeight="Bold" FontStyle="Italic" Height="90" HorizontalAlignment="Left" Width="80">
+        <Label x:Name="vote3" Content="0" Margin="1176,478,0,0" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Microsoft YaHei UI" FontWeight="Bold" FontStyle="Italic" Height="90" HorizontalAlignment="Left" Width="80">
             <Label.Effect>
                 <DropShadowEffect BlurRadius="7" ShadowDepth="10"/>
             </Label.Effect>
         </Label>
-        <Label x:Name="numberLab_Copy3" Content="0" HorizontalAlignment="Left" Margin="1176,575,0,0" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Microsoft YaHei UI" FontWeight="Bold" FontStyle="Italic" Height="90" Width="80">
+        <Label x:Name="vote4" Content="0" HorizontalAlignment="Left" Margin="1176,575,0,0" VerticalAlignment="Top" Foreground="White" FontSize="48" FontFamily="Microsoft YaHei UI" FontWeight="Bold" FontStyle="Italic" Height="90" Width="80">
             <Label.Effect>
                 <DropShadowEffect BlurRadius="7" ShadowDepth="10"/>
             </Label.Effect>
