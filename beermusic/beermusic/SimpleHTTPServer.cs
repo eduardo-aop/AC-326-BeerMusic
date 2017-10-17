@@ -108,7 +108,7 @@ class SimpleHTTPServer
     public SimpleHTTPServer(string path, int port)
     {
         Music.parseMusicList();
-        StartThread();
+        //StartThread(); --Comentado por conflito
         this.Initialize(path, port);
         _ipList = new List<String>();
     }
@@ -286,18 +286,19 @@ class SimpleHTTPServer
         }
     }
 
-    private void StartThread()
+    /*private void StartThread()
     {
         Thread t3 = new Thread(() => RefreshMusicList());
         t3.Start();
-    }
+    }*/
 
-    private void RefreshMusicList()
+    /*private void RefreshMusicList()
     {
         while(true)
         {
+            //TODO: Arrumar bug na saída do programa (não mata processo devido a thread rodando while true)
             Music.UpdateMusicList();
             Thread.Sleep(1000 * 60 * 2);
         }
-    }
+    }*/
 }
