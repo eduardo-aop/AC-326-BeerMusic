@@ -199,7 +199,16 @@ class SimpleHTTPServer
                 //check if path contains '/vote', it means user is voting in a music
                 if (filename.Contains("/vote"))
                 {
-                    Music.setMusicVoted(json);
+                    string clientIP = context.Request.RemoteEndPoint.Address.ToString();
+                    if (CheckIp(clientIP))
+                    {
+                        string voted = "{\"voted\":true}";
+                        sendResponseBody(context, voted);
+                    }
+                    else
+                    {
+                        Music.setMusicVoted(json);
+                    }
                 }
             }
             else if (requestType.Equals("GET"))
@@ -275,17 +284,23 @@ class SimpleHTTPServer
     }
  
 
-    private void VoteMethod(string json)
+    private bool CheckIp(string ip)
     {
-        Login l = ParseJson.parseLoginJson(json);
-        if (_ipList.Contains(l.ipAddress))
+        if (_ipList.Contains(ip))
         {
-            Console.WriteLine("Ip: " + l.ipAddress + "already registered");
+            Console.WriteLine("Ip: " + ip + "already registered");
+            return true;
         }
         else
         {
-            Console.WriteLine("Ip: " + l.ipAddress + "add");
-            _ipList.Add(l.ipAddress);
+            Console.WriteLine("Ip: " + ip + "add");
+            _ipList.Add(ip);
+            return false;
         }
+    }
+
+    public void cleanIp()
+    {
+        _ipList.Clear();
     }
 }

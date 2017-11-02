@@ -1,4 +1,4 @@
-var ip = "http://localhost:8084";
+var ip = "http://192.168.0.108:8084";
 
 $(document).ready(function(){
     httpGetMusicsAsync();
@@ -13,10 +13,17 @@ $(document).ready(function(){
 
 function httpPostVoteAsync()
 {
+    var msg = false;
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
+        if (xmlHttp.status == 200) {
+            var response = xmlHttp.responseText;
+            var obj = $.parseJSON(response);
+            if (obj.voted && !msg) {
+                alert('Você já votou nesta lista.\nAguarde próximas músicas');
+                msg = true;
+            }
+        }
     }
     xmlHttp.open("POST", ip + "/vote", true); // true for asynchronous 
     xmlHttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");

@@ -175,6 +175,7 @@ namespace beermusic
                     spotifyController.PlayURL(currentlyVotingSongs[maxId].url);
                     Thread.Sleep(64);
                     Music.chooseSongsForVoting();
+                    barServer.cleanIp();
                     passes = 0;
                 }
             }));
