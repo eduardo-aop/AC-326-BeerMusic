@@ -181,98 +181,103 @@ class SimpleHTTPServer
 
     private void Process(HttpListenerContext context)
     {
-        string filename = context.Request.Url.AbsolutePath;
-        Console.WriteLine(filename);
-        Console.WriteLine("Received a new web request.");
-      
-        //Get request type
-        string requestType = context.Request.HttpMethod;
-        Console.WriteLine("Determined request type.");
-
-        //Check if path contains something more than '/' and is type POST
-        if (!filename.Equals("/"))
+        Thread t2 = new Thread(delegate ()
         {
-            if (requestType.Equals("POST"))
-            {
-                string json = RequestBody(context);
+            string filename = context.Request.Url.AbsolutePath;
+            Console.WriteLine(filename);
+            Console.WriteLine("Received a new web request.");
 
-                //check if path contains '/vote', it means user is voting in a music
-                if (filename.Contains("/vote"))
+            //Get request type
+            string requestType = context.Request.HttpMethod;
+            Console.WriteLine("Determined request type.");
+
+            //Check if path contains something more than '/' and is type POST
+            if (!filename.Equals("/"))
+            {
+                if (requestType.Equals("POST"))
                 {
-                    string clientIP = context.Request.RemoteEndPoint.Address.ToString();
-                    if (CheckIp(clientIP))
+                    string json = RequestBody(context);
+
+                    //check if path contains '/vote', it means user is voting in a music
+                    if (filename.Contains("/vote"))
                     {
-                        string voted = "{\"voted\":true}";
-                        sendResponseBody(context, voted);
+                        string clientIP = context.Request.RemoteEndPoint.Address.ToString();
+                        if (CheckIp(clientIP))
+                        {
+                            string voted = "{\"voted\":true}";
+                            sendResponseBody(context, voted);
+                        }
+                        else
+                        {
+                            Music.setMusicVoted(json);
+                        }
                     }
-                    else
+                }
+                else if (requestType.Equals("GET"))
+                {
+                    if (filename.Contains("/musics"))
                     {
-                        Music.setMusicVoted(json);
+                        string json = Music.GetJsonMusicFromList();
+                        sendResponseBody(context, json);
                     }
                 }
             }
-            else if (requestType.Equals("GET"))
+            Console.WriteLine("Path checked.");
+            filename = filename.Substring(1);
+
+            if (string.IsNullOrEmpty(filename))
             {
-                if (filename.Contains("/musics"))
+                foreach (string indexFile in _indexFiles)
                 {
-                    string json = Music.GetJsonMusicFromList();
-                    sendResponseBody(context, json);
+                    if (File.Exists(Path.Combine(_rootDirectory, indexFile)))
+                    {
+                        filename = indexFile;
+                        break;
+                    }
                 }
             }
-        }
-        Console.WriteLine("Path checked.");
-        filename = filename.Substring(1);
 
-        if (string.IsNullOrEmpty(filename))
-        {
-            foreach (string indexFile in _indexFiles)
+            filename = Path.Combine(_rootDirectory, filename);
+
+            if (File.Exists(filename))
             {
-                if (File.Exists(Path.Combine(_rootDirectory, indexFile)))
+                try
                 {
-                    filename = indexFile;
-                    break;
+                    Stream input = new FileStream(filename, FileMode.Open);
+                    Console.WriteLine("Checking if file exists.");
+                    //Adding permanent http response headers
+                    string mime;
+                    context.Response.ContentType = _mimeTypeMappings.TryGetValue(Path.GetExtension(filename), out mime) ? mime : "application/octet-stream";
+                    context.Response.ContentLength64 = input.Length;
+                    context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
+                    context.Response.AddHeader("Last-Modified", System.IO.File.GetLastWriteTime(filename).ToString("r"));
+
+                    byte[] buffer = new byte[1024 * 16];
+                    int nbytes;
+                    while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
+                        context.Response.OutputStream.Write(buffer, 0, nbytes);
+                    input.Close();
+
+                    Console.WriteLine("Served file.");
+                    context.Response.StatusCode = (int)HttpStatusCode.OK;
+                    context.Response.OutputStream.Flush();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 }
             }
-        }
- 
-        filename = Path.Combine(_rootDirectory, filename);
- 
-        if (File.Exists(filename))
-        {
-            try
+            else
             {
-                Stream input = new FileStream(filename, FileMode.Open);
-                Console.WriteLine("Checking if file exists.");
-                //Adding permanent http response headers
-                string mime;
-                context.Response.ContentType = _mimeTypeMappings.TryGetValue(Path.GetExtension(filename), out mime) ? mime : "application/octet-stream";
-                context.Response.ContentLength64 = input.Length;
-                context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
-                context.Response.AddHeader("Last-Modified", System.IO.File.GetLastWriteTime(filename).ToString("r"));
- 
-                byte[] buffer = new byte[1024 * 16];
-                int nbytes;
-                while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
-                    context.Response.OutputStream.Write(buffer, 0, nbytes);
-                input.Close();
-
-                Console.WriteLine("Served file.");
-                context.Response.StatusCode = (int)HttpStatusCode.OK;
-                context.Response.OutputStream.Flush();
+                context.Response.StatusCode = (int)HttpStatusCode.NotFound;
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            }
-        }
-        else
-        {
-            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-        }
 
-        Console.WriteLine("Stream closed.");
-        context.Response.OutputStream.Close();
+            Console.WriteLine("Stream closed.");
+            context.Response.OutputStream.Close();
+        });
+        t2.Start();
+        
     }
  
     private void Initialize(string path, int port)
