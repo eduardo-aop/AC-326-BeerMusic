@@ -33,6 +33,7 @@ namespace beermusic
         SimpleHTTPServer barServer;
         SpotifyLocalAPI spotifyController;
         StatusResponse spotifyStatus;
+        int passes = 0; //Gambiarra
 
         public static MainWindow client;
 
@@ -115,6 +116,13 @@ namespace beermusic
                 spotifyController.OnTrackChange += SpotifyController_OnTrackChange;
                 currentlyVotingSongs = Music.chooseSongsForVoting();
                 resetVotingLabels();
+
+                if (!spotifyController.GetStatus().Playing)
+                {
+                    //Sempre toca The Final Countdown primeiro se spotify não estiver tocando nada
+                    spotifyController.PlayURL(Music.musicDB[59].url);
+                }
+
             }
             else
             {
@@ -133,7 +141,6 @@ namespace beermusic
                 songProgress.Maximum = e.NewTrack.Length;
                 //albumArt.Source = ByteImageConverter.ByteToImage(spotifyStatus.Track.GetAlbumArtAsByteArray(AlbumArtSize.Size640));
                 updateCover(e.NewTrack.GetAlbumArtUrl(AlbumArtSize.Size320));
-                currentlyVotingSongs = Music.chooseSongsForVoting();
                 resetVotingLabels();
                 
             }));
@@ -144,7 +151,35 @@ namespace beermusic
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 songProgress.Value = e.TrackTime;
+                passes += 1;
+
+                if ((e.TrackTime > songProgress.Maximum - 2) && (passes > 15))
+                {
+                    int maxId = 0;
+                    int maxVot = 0;
+                    //Pega a música mais votada
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (currentlyVotingSongs[i].votos > maxVot)
+                        {
+                            maxId = i;
+                            maxVot = currentlyVotingSongs[i].votos;
+                        }
+                        currentlyVotingSongs[i].votos = 0;
+                    }
+                    spotifyController.Pause();
+                    Thread.Sleep(16);
+                    Debug.WriteLine("");
+                    Debug.WriteLine("Winning song: " + currentlyVotingSongs[maxId].name);
+                    Debug.WriteLine("");
+                    spotifyController.PlayURL(currentlyVotingSongs[maxId].url);
+                    Thread.Sleep(64);
+                    Music.chooseSongsForVoting();
+                    passes = 0;
+                }
             }));
+
+            
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
