@@ -1,5 +1,6 @@
 // MIT License - Copyright (c) 2016 Can Güney Aksakalli
 // https://aksakalli.github.io/2014/02/24/simple-http-server-with-csparp.html
+// Modified by Pedro Polez, Eduardo Pereira, Jonathan Donizetti e Filipe Mazzon for BeerMusic project, 2017.
 
 using System;
 using System.Collections.Generic;
@@ -93,13 +94,13 @@ class SimpleHTTPServer
     private HttpListener _listener;
     private int _port;
     private List<String> _ipList;
-
     public int Port
     {
         get { return _port; }
         private set { }
     }
  
+
     /// <summary>
     /// Construct server with given port.
     /// </summary>
@@ -202,7 +203,7 @@ class SimpleHTTPServer
                     if (filename.Contains("/vote"))
                     {
                         string clientIP = context.Request.RemoteEndPoint.Address.ToString();
-                        if (CheckIp(clientIP))
+                        if (checkIp(clientIP))
                         {
                             string voted = "{\"voted\":true}";
                             sendResponseBody(context, voted);
@@ -217,7 +218,7 @@ class SimpleHTTPServer
                 {
                     if (filename.Contains("/musics"))
                     {
-                        string json = Music.GetJsonMusicFromList();
+                        string json = Music.getJsonMusicFromList();
                         sendResponseBody(context, json);
                     }
                 }
@@ -287,9 +288,8 @@ class SimpleHTTPServer
         _serverThread = new Thread(this.Listen);
         _serverThread.Start();
     }
- 
 
-    private bool CheckIp(string ip)
+    private bool checkIp(string ip)
     {
         if (_ipList.Contains(ip))
         {

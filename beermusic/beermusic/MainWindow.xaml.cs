@@ -30,14 +30,14 @@ namespace beermusic
     /// </summary>
     public partial class MainWindow : Window
     {
-        SimpleHTTPServer barServer;
-        SpotifyLocalAPI spotifyController;
-        StatusResponse spotifyStatus;
+        private SimpleHTTPServer barServer;
+        private SpotifyLocalAPI spotifyController;
+        private StatusResponse spotifyStatus;
         int passes = 0; //Gambiarra
 
         public static MainWindow client;
 
-        static List<Music> currentlyVotingSongs = new List<Music>();
+        private static List<Music> currentlyVotingSongs = new List<Music>();
 
         public MainWindow()
         {

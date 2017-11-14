@@ -1,4 +1,4 @@
-var ip = "http://192.168.0.108:8084";
+﻿var ip = "http://localhost:8084";
 
 $(document).ready(function(){
     httpGetMusicsAsync();

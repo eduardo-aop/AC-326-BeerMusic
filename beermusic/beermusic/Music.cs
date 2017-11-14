@@ -14,11 +14,10 @@ class Music
     public string url { get; set; }
     public int votos { get; set; }
 
-    static List<Music> currentlyVotingSongs = new List<Music>();
-    static Random rnd = new Random();
+    private static List<Music> currentlyVotingSongs = new List<Music>();
+    private static Random rnd = new Random();
 
     public static List<Music> musicDB = new List<Music>();
-    public static Dictionary<string, int> musicsVoted = new Dictionary<string, int>();
     public static bool hasDBPopulated { get; set; } = false;
 
     Music(string songName, string artistName, string spotifyUrl)
@@ -58,7 +57,7 @@ class Music
         return false;
     }
 
-    public static string GetJsonMusicFromList()
+    public static string getJsonMusicFromList()
     {
         var json = JsonConvert.SerializeObject(currentlyVotingSongs);
         return json;

@@ -12,16 +12,16 @@ body{
 	width: 100%;
 }
 tr{
-	background-color:#aaaaaa;
+	background-color:#b5caf2;
 }	
 tr:nth-child(even){
-	background-color: #ffffff
+	background-color: #c9efcd;
 }
 .container{
 	padding-top:250px; 
 }
 th {
-    background-color: #4CAF50;
+    background-color: #02700d;
     color: white;
 }
 
@@ -29,7 +29,7 @@ th {
 {
 	height: 100%;
 	width: 100%;
-    background: #76b852;
+    background: #003f06;
 }
 .mytable
 {
